@@ -1,22 +1,33 @@
 import { useState, useEffect } from "react";
 import "../css/Weather.css";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const Weather = () => {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [location, setLocation] = useState("Jakarta");
 
-  // Ganti dengan API key Anda dari OpenWeatherMap
-  const API_KEY = "b8bba5f3dc96ec53bada6b7f83a901ba";
+  // Gunakan localStorage untuk menyimpan lokasi favorit user
+  const [location, setLocation] = useLocalStorage("weatherLocation", "Jakarta");
+  const [apiKey, setApiKey] = useLocalStorage(
+    "weatherApiKey",
+    "YOUR_API_KEY_HERE"
+  );
+  const [weatherHistory, setWeatherHistory] = useLocalStorage(
+    "weatherHistory",
+    []
+  );
+
+  // API key dari localStorage atau default
+  const API_KEY = apiKey;
 
   const fetchWeather = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      // Jika tidak ada API key, gunakan data mock
-      if (API_KEY === "b8bba5f3dc96ec53bada6b7f83a901ba") {
+      // Jika tidak ada API key yang valid, gunakan data mock
+      if (API_KEY === "YOUR_API_KEY_HERE") {
         // Data mock untuk demo
         setTimeout(() => {
           const mockData = {
@@ -29,31 +40,47 @@ const Weather = () => {
               },
             ],
             main: {
-              temp: 28,
-              feels_like: 32,
-              humidity: 75,
-              pressure: 1013,
+              temp: Math.round(25 + Math.random() * 10),
+              feels_like: Math.round(28 + Math.random() * 8),
+              humidity: Math.round(60 + Math.random() * 30),
+              pressure: Math.round(1010 + Math.random() * 20),
             },
             wind: {
-              speed: 3.5,
+              speed: Math.round((Math.random() * 5 + 1) * 10) / 10,
+              deg: Math.round(Math.random() * 360)
             },
-            visibility: 10000,
+            visibility: Math.round(8000 + Math.random() * 2000),
           };
           setWeather(mockData);
           setLoading(false);
+          
+          // Simpan ke history
+          const newHistory = [
+            location,
+            ...weatherHistory.filter((loc) => loc !== location),
+          ].slice(0, 5);
+          setWeatherHistory(newHistory);
         }, 1000);
         return;
       }
 
       // API call yang sebenarnya
-      const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&units=metric&lang=id`;
+      const API_URL = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&appid=${API_KEY}&units=metric&lang=id`;
       const response = await fetch(API_URL);
+      
       if (!response.ok) {
-        throw new Error("Gagal mengambil data cuaca");
+        throw new Error("Gagal mengambil data cuaca. Periksa API key atau nama kota.");
       }
 
       const data = await response.json();
       setWeather(data);
+
+      // Simpan ke history (maksimal 5 lokasi terakhir)
+      const newHistory = [
+        location,
+        ...weatherHistory.filter((loc) => loc !== location),
+      ].slice(0, 5);
+      setWeatherHistory(newHistory);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -75,6 +102,100 @@ const Weather = () => {
     if (newLocation) {
       setLocation(newLocation);
       e.target.reset();
+    }
+  };
+
+  const handleApiKeyChange = (e) => {
+    e.preventDefault();
+    const newApiKey = e.target.apikey.value.trim();
+    if (newApiKey) {
+      setApiKey(newApiKey);
+      e.target.reset();
+      alert("API Key berhasil disimpan!");
+    }
+  };
+
+  const selectHistoryLocation = (historyLocation) => {
+    setLocation(historyLocation);
+  };
+
+  const clearHistory = () => {
+    setWeatherHistory([]);
+  };
+
+  const getCurrentLocationWeather = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Get user location
+      if (!navigator.geolocation) {
+        throw new Error('Geolocation tidak didukung browser ini');
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            const { latitude, longitude } = position.coords;
+            
+            if (API_KEY === "YOUR_API_KEY_HERE") {
+              // Mock data untuk lokasi saat ini
+              const mockData = {
+                name: "Lokasi Saat Ini",
+                sys: { country: "ID" },
+                weather: [{ description: "cerah", icon: "01d" }],
+                main: {
+                  temp: Math.round(25 + Math.random() * 10),
+                  feels_like: Math.round(28 + Math.random() * 8),
+                  humidity: Math.round(60 + Math.random() * 30),
+                  pressure: Math.round(1010 + Math.random() * 20),
+                },
+                wind: { speed: Math.round((Math.random() * 5 + 1) * 10) / 10 },
+                visibility: Math.round(8000 + Math.random() * 2000),
+              };
+              setWeather(mockData);
+              setLocation("Lokasi Saat Ini");
+              setLoading(false);
+              return;
+            }
+
+            // Real API call
+            const API_URL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric&lang=id`;
+            const response = await fetch(API_URL);
+            
+            if (!response.ok) {
+              throw new Error("Gagal mengambil data cuaca untuk lokasi ini");
+            }
+            
+            const data = await response.json();
+            setWeather(data);
+            setLocation(data.name);
+            setLoading(false);
+          } catch (err) {
+            setError(`Lokasi: ${err.message}`);
+            setLoading(false);
+          }
+        },
+        (error) => {
+          let message = 'Gagal mendapatkan lokasi';
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              message = 'Akses lokasi ditolak';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              message = 'Lokasi tidak tersedia';
+              break;
+            case error.TIMEOUT:
+              message = 'Timeout mendapatkan lokasi';
+              break;
+          }
+          setError(`Lokasi: ${message}`);
+          setLoading(false);
+        }
+      );
+    } catch (err) {
+      setError(`Lokasi: ${err.message}`);
+      setLoading(false);
     }
   };
 
@@ -109,18 +230,73 @@ const Weather = () => {
       <div className="weather-card">
         <div className="weather-header">
           <h2>Cuaca Hari Ini</h2>
-          <form onSubmit={handleLocationChange} className="location-form">
-            <input
-              type="text"
-              name="location"
-              placeholder="Masukkan nama kota..."
-              className="location-input"
-            />
-            <button type="submit" className="search-btn">
-              🔍
+          <div className="search-controls">
+            <form onSubmit={handleLocationChange} className="location-form">
+              <input
+                type="text"
+                name="location"
+                placeholder="Masukkan nama kota..."
+                className="location-input"
+              />
+              <button type="submit" className="search-btn">
+                🔍
+              </button>
+            </form>
+            <button
+              onClick={getCurrentLocationWeather}
+              className="location-btn"
+              title="Gunakan lokasi saat ini"
+            >
+              📍
             </button>
-          </form>
+          </div>
         </div>
+
+        {/* API Key Settings */}
+        {API_KEY === "YOUR_API_KEY_HERE" && (
+          <div className="api-key-section">
+            <p className="api-notice">
+              💡 Untuk data cuaca real-time, masukkan API key dari
+              OpenWeatherMap
+            </p>
+            <form onSubmit={handleApiKeyChange} className="api-form">
+              <input
+                type="text"
+                name="apikey"
+                placeholder="Masukkan API key..."
+                className="api-input"
+              />
+              <button type="submit" className="api-btn">
+                Simpan
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* Location History */}
+        {weatherHistory.length > 0 && (
+          <div className="history-section">
+            <div className="history-header">
+              <span>Lokasi Terakhir:</span>
+              <button onClick={clearHistory} className="clear-btn">
+                Hapus
+              </button>
+            </div>
+            <div className="history-list">
+              {weatherHistory.map((historyLocation, index) => (
+                <button
+                  key={index}
+                  onClick={() => selectHistoryLocation(historyLocation)}
+                  className={`history-item ${
+                    location === historyLocation ? "active" : ""
+                  }`}
+                >
+                  {historyLocation}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {weather && (
           <div className="weather-content">
