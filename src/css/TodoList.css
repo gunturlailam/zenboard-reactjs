@@ -734,4 +734,188 @@ sponsive Design */
 
 .todo-item.completed {
   animation: completionPulse 0.6s ease-out;
+}/
+* Enhanced Dark Theme Support with Responsive Text */
+[data-theme="dark"] .todo-card {
+  background: rgba(15, 23, 42, 0.95);
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .todo-header h2 {
+  background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="dark"] .stat-number {
+  color: #a78bfa;
+}
+
+[data-theme="dark"] .stat-label {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .todo-input {
+  background: rgba(51, 65, 85, 0.8);
+  color: #f1f5f9;
+  border-color: rgba(167, 139, 250, 0.3);
+}
+
+[data-theme="dark"] .todo-input::placeholder {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .todo-text {
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .todo-date {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .empty-state h3 {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .empty-state p {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .footer-stats {
+  color: #94a3b8;
+}
+
+/* Light Theme Enhancements */
+[data-theme="light"] .todo-card {
+  background: rgba(255, 255, 255, 0.95);
+  color: #1e293b;
+}
+
+[data-theme="light"] .todo-header h2 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="light"] .stat-number {
+  color: #667eea;
+}
+
+[data-theme="light"] .stat-label {
+  color: #64748b;
+}
+
+[data-theme="light"] .todo-input {
+  background: rgba(255, 255, 255, 0.8);
+  color: #1e293b;
+  border-color: rgba(102, 126, 234, 0.1);
+}
+
+[data-theme="light"] .todo-input::placeholder {
+  color: #94a3b8;
+}
+
+[data-theme="light"] .todo-text {
+  color: #1e293b;
+}
+
+[data-theme="light"] .todo-date {
+  color: #64748b;
+}
+
+[data-theme="light"] .empty-state h3 {
+  color: #475569;
+}
+
+[data-theme="light"] .empty-state p {
+  color: #64748b;
+}
+
+[data-theme="light"] .footer-stats {
+  color: #64748b;
+}
+
+/* Auto Theme Support */
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] .todo-card {
+    background: rgba(15, 23, 42, 0.95);
+    color: #f1f5f9;
+  }
+  
+  [data-theme="auto"] .todo-header h2 {
+    background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  [data-theme="auto"] .stat-number {
+    color: #a78bfa;
+  }
+  
+  [data-theme="auto"] .stat-label {
+    color: #94a3b8;
+  }
+  
+  [data-theme="auto"] .todo-input {
+    background: rgba(51, 65, 85, 0.8);
+    color: #f1f5f9;
+    border-color: rgba(167, 139, 250, 0.3);
+  }
+  
+  [data-theme="auto"] .todo-text {
+    color: #f1f5f9;
+  }
+  
+  [data-theme="auto"] .todo-date {
+    color: #94a3b8;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme="auto"] .todo-card {
+    background: rgba(255, 255, 255, 0.95);
+    color: #1e293b;
+  }
+  
+  [data-theme="auto"] .todo-header h2 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  [data-theme="auto"] .stat-number {
+    color: #667eea;
+  }
+  
+  [data-theme="auto"] .stat-label {
+    color: #64748b;
+  }
+  
+  [data-theme="auto"] .todo-input {
+    background: rgba(255, 255, 255, 0.8);
+    color: #1e293b;
+    border-color: rgba(102, 126, 234, 0.1);
+  }
+  
+  [data-theme="auto"] .todo-text {
+    color: #1e293b;
+  }
+}
+
+/* Smooth Theme Transitions for Todo */
+.todo-card,
+.todo-header h2,
+.stat-number,
+.stat-label,
+.todo-input,
+.todo-text,
+.todo-date,
+.empty-state h3,
+.empty-state p,
+.footer-stats {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }

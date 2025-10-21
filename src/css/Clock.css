@@ -1,0 +1,644 @@
+/* Clock Component - Premium Modern Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.clock-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.1) 0%, 
+    rgba(118, 75, 162, 0.1) 50%, 
+    rgba(240, 147, 251, 0.1) 100%);
+  border-radius: 25px;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.clock-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(240, 147, 251, 0.1) 0%, transparent 50%);
+  animation: backgroundPulse 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes backgroundPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.clock-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 20px 40px rgba(102, 126, 234, 0.2),
+    0 0 0 1px rgba(102, 126, 234, 0.3);
+  border-color: rgba(102, 126, 234, 0.4);
+}
+
+.time-display {
+  font-family: 'Orbitron', monospace;
+  font-size: 48px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 2;
+  letter-spacing: 2px;
+  animation: timeGlow 3s ease-in-out infinite;
+}
+
+@keyframes timeGlow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
+  }
+  50% { 
+    filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.6));
+  }
+}
+
+.date-display {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-secondary, #64748b);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  opacity: 0.9;
+  letter-spacing: 0.5px;
+  text-transform: capitalize;
+  background: rgba(102, 126, 234, 0.05);
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.date-display:hover {
+  background: rgba(102, 126, 234, 0.1);
+  border-color: rgba(102, 126, 234, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Digital Clock Style Enhancement */
+.time-display::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  animation: shine 4s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: 10px;
+}
+
+@keyframes shine {
+  0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0; }
+  50% { transform: translate(-50%, -50%) rotate(180deg); opacity: 1; }
+  100% { transform: translate(-50%, -50%) rotate(360deg); opacity: 0; }
+}
+
+/* Floating Elements */
+.clock-container::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(240, 147, 251, 0.2) 100%);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(180deg); }
+}
+
+/* Time Separator Animation */
+.time-display {
+  position: relative;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .clock-container {
+    padding: 25px 15px;
+    min-height: 180px;
+  }
+  
+  .time-display {
+    font-size: 36px;
+    letter-spacing: 1px;
+  }
+  
+  .date-display {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .clock-container {
+    padding: 20px 12px;
+    min-height: 160px;
+    border-radius: 20px;
+  }
+  
+  .time-display {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  
+  .date-display {
+    font-size: 13px;
+    padding: 5px 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .clock-container {
+    padding: 15px 10px;
+    min-height: 140px;
+  }
+  
+  .time-display {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .date-display {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}
+
+/* Widget Container Overrides */
+.widget-container .clock-container {
+  background: transparent !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  padding: 20px !important;
+}
+
+.widget-container.compact .clock-container {
+  min-height: 150px !important;
+  padding: 15px !important;
+}
+
+.widget-container.compact .time-display {
+  font-size: 32px !important;
+  margin-bottom: 10px !important;
+}
+
+.widget-container.compact .date-display {
+  font-size: 13px !important;
+}
+
+/* Horizontal Widget Responsive */
+.horizontal-widget .clock-container {
+  padding: 15px !important;
+  min-height: 120px !important;
+}
+
+.horizontal-widget .time-display {
+  font-size: 28px !important;
+  margin-bottom: 8px !important;
+}
+
+.horizontal-widget .date-display {
+  font-size: 12px !important;
+  padding: 4px 8px !important;
+}
+
+/* Dark Theme Support */
+[data-theme="dark"] .clock-container {
+  background: linear-gradient(135deg, 
+    rgba(102, 126, 234, 0.15) 0%, 
+    rgba(118, 75, 162, 0.15) 50%, 
+    rgba(240, 147, 251, 0.15) 100%);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+[data-theme="dark"] .date-display {
+  color: #cbd5e1;
+  background: rgba(102, 126, 234, 0.1);
+  border-color: rgba(102, 126, 234, 0.2);
+}
+
+[data-theme="dark"] .date-display:hover {
+  background: rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+/* Enhanced Animation for Seconds */
+.time-display {
+  animation: timeGlow 3s ease-in-out infinite, digitalFlicker 0.1s ease-in-out infinite;
+}
+
+@keyframes digitalFlicker {
+  0%, 98% { opacity: 1; }
+  99% { opacity: 0.98; }
+  100% { opacity: 1; }
+}
+
+/* Pulse Effect on Container */
+.clock-container {
+  animation: containerPulse 4s ease-in-out infinite;
+}
+
+@keyframes containerPulse {
+  0%, 100% { 
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.1);
+  }
+  50% { 
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+  }
+}
+
+/* Force Responsive Behavior */
+.clock-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Container Query Support */
+@container (max-width: 300px) {
+  .time-display {
+    font-size: 24px;
+  }
+  
+  .date-display {
+    font-size: 11px;
+  }
+}/
+* Time Period Indicator */
+.time-period {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding: 6px 12px;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 20px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.time-period:hover {
+  background: rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.3);
+  transform: translateY(-2px);
+}
+
+.period-icon {
+  font-size: 16px;
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.period-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary, #64748b);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Clock Decorations */
+.clock-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.decoration {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(240, 147, 251, 0.1) 100%);
+  animation: decorationFloat 8s ease-in-out infinite;
+}
+
+.decoration-1 {
+  width: 20px;
+  height: 20px;
+  top: 15px;
+  left: 15px;
+  animation-delay: 0s;
+}
+
+.decoration-2 {
+  width: 15px;
+  height: 15px;
+  top: 25px;
+  right: 20px;
+  animation-delay: -2s;
+}
+
+.decoration-3 {
+  width: 25px;
+  height: 25px;
+  bottom: 20px;
+  left: 25px;
+  animation-delay: -4s;
+}
+
+@keyframes decorationFloat {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% { 
+    transform: translateY(-10px) rotate(180deg);
+    opacity: 0.6;
+  }
+}
+
+/* Enhanced Time Display with Blinking Colon */
+.time-display {
+  position: relative;
+}
+
+.time-display::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 50%;
+  animation: colonBlink 1s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes colonBlink {
+  0%, 50% { opacity: 0; }
+  51%, 100% { opacity: 1; }
+}
+
+/* Responsive Updates for New Elements */
+@media (max-width: 768px) {
+  .time-period {
+    margin-bottom: 12px;
+    padding: 5px 10px;
+  }
+  
+  .period-icon {
+    font-size: 14px;
+  }
+  
+  .period-text {
+    font-size: 11px;
+  }
+  
+  .decoration-1 {
+    width: 15px;
+    height: 15px;
+  }
+  
+  .decoration-2 {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .decoration-3 {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .time-period {
+    margin-bottom: 10px;
+    padding: 4px 8px;
+  }
+  
+  .period-icon {
+    font-size: 12px;
+  }
+  
+  .period-text {
+    font-size: 10px;
+  }
+  
+  .decoration {
+    display: none;
+  }
+}
+
+/* Widget Container Overrides for New Elements */
+.widget-container.compact .time-period {
+  margin-bottom: 8px !important;
+  padding: 4px 8px !important;
+}
+
+.widget-container.compact .period-icon {
+  font-size: 12px !important;
+}
+
+.widget-container.compact .period-text {
+  font-size: 10px !important;
+}
+
+.horizontal-widget .time-period {
+  margin-bottom: 6px !important;
+  padding: 3px 6px !important;
+}
+
+.horizontal-widget .period-icon {
+  font-size: 10px !important;
+}
+
+.horizontal-widget .period-text {
+  font-size: 9px !important;
+}
+
+/* Dark Theme for New Elements */
+[data-theme="dark"] .time-period {
+  background: rgba(102, 126, 234, 0.15);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+[data-theme="dark"] .period-text {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .time-period:hover {
+  background: rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.4);
+}
+
+/* Advanced Glow Effect */
+.time-display {
+  position: relative;
+  filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
+}
+
+.time-display::before {
+  content: attr(data-time);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: blur(2px);
+  opacity: 0.5;
+  z-index: -1;
+}
+
+/* Pulse Animation for Active State */
+.clock-container.active {
+  animation: activePulse 2s ease-in-out infinite;
+}
+
+@keyframes activePulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+  }
+  50% { 
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+  }
+}/* Enha
+nced Dark Theme Support with Responsive Text */
+[data-theme="dark"] .time-display {
+  background: linear-gradient(135deg, #a78bfa 0%, #c084fc 50%, #f0abfc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 15px rgba(167, 139, 250, 0.4));
+}
+
+[data-theme="dark"] .date-display {
+  color: #e2e8f0;
+  background: rgba(167, 139, 250, 0.1);
+  border-color: rgba(167, 139, 250, 0.2);
+}
+
+[data-theme="dark"] .period-text {
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .time-period {
+  background: rgba(167, 139, 250, 0.1);
+  border-color: rgba(167, 139, 250, 0.2);
+}
+
+[data-theme="dark"] .clock-container {
+  background: linear-gradient(135deg, 
+    rgba(167, 139, 250, 0.1) 0%, 
+    rgba(192, 132, 252, 0.1) 50%, 
+    rgba(240, 171, 252, 0.1) 100%);
+  border-color: rgba(167, 139, 250, 0.2);
+}
+
+/* Light Theme Enhancements */
+[data-theme="light"] .time-display {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
+}
+
+[data-theme="light"] .date-display {
+  color: #475569;
+  background: rgba(102, 126, 234, 0.05);
+  border-color: rgba(102, 126, 234, 0.1);
+}
+
+[data-theme="light"] .period-text {
+  color: #64748b;
+}
+
+/* Auto Theme - Follows System */
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] .time-display {
+    background: linear-gradient(135deg, #a78bfa 0%, #c084fc 50%, #f0abfc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 15px rgba(167, 139, 250, 0.4));
+  }
+  
+  [data-theme="auto"] .date-display {
+    color: #e2e8f0;
+    background: rgba(167, 139, 250, 0.1);
+    border-color: rgba(167, 139, 250, 0.2);
+  }
+  
+  [data-theme="auto"] .period-text {
+    color: #e2e8f0;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme="auto"] .time-display {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
+  }
+  
+  [data-theme="auto"] .date-display {
+    color: #475569;
+    background: rgba(102, 126, 234, 0.05);
+    border-color: rgba(102, 126, 234, 0.1);
+  }
+  
+  [data-theme="auto"] .period-text {
+    color: #64748b;
+  }
+}
+
+/* Smooth Theme Transitions */
+.time-display,
+.date-display,
+.period-text,
+.time-period,
+.clock-container {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}

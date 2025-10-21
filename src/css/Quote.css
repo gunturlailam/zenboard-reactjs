@@ -594,4 +594,147 @@ ia (max-width: 480px) {
   background: linear-gradient(90deg, #667eea 25%, #764ba2 50%, #667eea 75%);
   background-size: 200px 100%;
   animation: shimmer 2s infinite, spin 1s linear infinite;
+}/* Enh
+anced Dark Theme Support with Responsive Text */
+[data-theme="dark"] .quote-card {
+  background: rgba(15, 23, 42, 0.95);
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .quote-header h2 {
+  background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="dark"] .quote-text {
+  color: #f1f5f9;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .quote-author {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .quote-category {
+  background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .section-header span {
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .favorite-preview,
+[data-theme="dark"] .history-preview {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .favorite-author,
+[data-theme="dark"] .history-author {
+  color: #94a3b8;
+}
+
+/* Light Theme Enhancements */
+[data-theme="light"] .quote-card {
+  background: rgba(255, 255, 255, 0.95);
+  color: #1e293b;
+}
+
+[data-theme="light"] .quote-header h2 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="light"] .quote-text {
+  color: #1e293b;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .quote-author {
+  color: #475569;
+}
+
+[data-theme="light"] .quote-category {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+}
+
+[data-theme="light"] .favorite-preview,
+[data-theme="light"] .history-preview {
+  color: #475569;
+}
+
+[data-theme="light"] .favorite-author,
+[data-theme="light"] .history-author {
+  color: #64748b;
+}
+
+/* Auto Theme Support */
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] .quote-card {
+    background: rgba(15, 23, 42, 0.95);
+    color: #f1f5f9;
+  }
+  
+  [data-theme="auto"] .quote-header h2 {
+    background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  [data-theme="auto"] .quote-text {
+    color: #f1f5f9;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  [data-theme="auto"] .quote-author {
+    color: #cbd5e1;
+  }
+  
+  [data-theme="auto"] .quote-category {
+    background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+    color: #ffffff;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme="auto"] .quote-card {
+    background: rgba(255, 255, 255, 0.95);
+    color: #1e293b;
+  }
+  
+  [data-theme="auto"] .quote-header h2 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  [data-theme="auto"] .quote-text {
+    color: #1e293b;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  [data-theme="auto"] .quote-author {
+    color: #475569;
+  }
+}
+
+/* Smooth Theme Transitions for Quote */
+.quote-card,
+.quote-header h2,
+.quote-text,
+.quote-author,
+.quote-category,
+.section-header span,
+.favorite-preview,
+.history-preview,
+.favorite-author,
+.history-author {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
